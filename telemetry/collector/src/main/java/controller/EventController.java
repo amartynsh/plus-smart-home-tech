@@ -1,11 +1,9 @@
 package controller;
 
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import model.hub.HubEvent;
 import model.sensor.SensorEvent;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,20 +14,19 @@ import service.CollectorService;
 @AllArgsConstructor
 @RequestMapping("/events")
 @RestController
-@Valid
 public class EventController {
 
     private final CollectorService collectorService;
 
     @PostMapping(value = "/sensors")
-    public void collectSensors(@Validated @RequestBody SensorEvent event) {
+    public void collectSensors(@RequestBody SensorEvent event) {
         log.info("Обращение на /sensors с событием {}", event.toString());
         collectorService.sendSensorEvent(event);
 
     }
 
     @PostMapping(value = "/hubs")
-    public void collectHubs(@Validated @RequestBody HubEvent event) {
+    public void collectHubs(@RequestBody HubEvent event) {
         log.info("Обращение на /hubs с событием {}", event.toString());
         collectorService.sendHubEvent(event);
     }
