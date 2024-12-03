@@ -7,6 +7,10 @@ public interface EventClient {
 
     Producer<String, SpecificRecordBase> getProducer();
 
+    String getSensorTopic();
+
+    String getHubTopic();
+
     void stop();
 }
 

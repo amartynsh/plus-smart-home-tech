@@ -4,3 +4,6 @@ spring:
       bootstrap-servers: localhost:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: serializer.EventsAvroSerializer
+    topics:
+      sensor-topic: telemetry.sensors.v1
+      hub-topic: telemetry.hubs.v1

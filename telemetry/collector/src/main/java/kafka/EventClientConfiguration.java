@@ -1,6 +1,7 @@
 package kafka;
 
 import jakarta.annotation.PreDestroy;
+import lombok.Getter;
 import org.apache.avro.specific.SpecificRecordBase;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
@@ -20,6 +21,7 @@ public class EventClientConfiguration implements EnvironmentAware {
     public void setEnvironment(Environment environment) {
         this.environment = environment;
     }
+
 
     @Bean
     EventClient getClient() {
@@ -46,6 +48,11 @@ public class EventClientConfiguration implements EnvironmentAware {
 
                 producer = new KafkaProducer<>(config);
             }
+
+            @Getter
+            private final String sensorTopic = environment.getProperty("spring.kafka.topics.sensor-topic");
+            @Getter
+            private final String hubTopic = environment.getProperty("spring.kafka.topics.hub-topic");
 
             @PreDestroy
             @Override
