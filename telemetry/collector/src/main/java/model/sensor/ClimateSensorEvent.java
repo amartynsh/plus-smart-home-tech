@@ -10,7 +10,6 @@ import model.sensor.constants.SensorEventType;
 @Setter
 @AllArgsConstructor
 @RequiredArgsConstructor
-
 public class ClimateSensorEvent extends SensorEvent {
 
     private int temperatureC;

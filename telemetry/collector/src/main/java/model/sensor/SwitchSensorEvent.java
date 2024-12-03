@@ -9,7 +9,6 @@ import model.sensor.constants.SensorEventType;
 @Getter
 @Setter
 public class SwitchSensorEvent extends SensorEvent {
-
     private boolean state;
 
     @Override
