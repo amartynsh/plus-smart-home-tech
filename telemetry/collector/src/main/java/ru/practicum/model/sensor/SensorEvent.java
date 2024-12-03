@@ -33,4 +33,3 @@ public abstract class SensorEvent {
     // абстрактный метод, который должен быть определён в конкретных реализациях
     public abstract SensorEventType getType();
 }
-

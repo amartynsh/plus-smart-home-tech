@@ -66,6 +66,5 @@ public class HubEventMapper {
             default:
                 throw new IllegalArgumentException("Unknown event type");
         }
-
     }
 }

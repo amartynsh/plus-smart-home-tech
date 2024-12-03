@@ -5,7 +5,6 @@ import lombok.Setter;
 import ru.practicum.model.hub.constants.ConditionOperation;
 import ru.practicum.model.hub.constants.ConditionType;
 
-
 @Getter
 @Setter
 public class ScenarioCondition {

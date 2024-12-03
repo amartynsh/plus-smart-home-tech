@@ -16,7 +16,6 @@ public class ScenarioAddedEvent extends HubEvent {
     private List<ScenarioCondition> conditions;
     private List<DeviceAction> actions;
 
-
     @Override
     public HubEventType getType() {
         return HubEventType.SCENARIO_ADDED;

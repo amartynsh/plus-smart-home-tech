@@ -15,14 +15,12 @@ import ru.practicum.service.CollectorService;
 @RequestMapping("/events")
 @RestController
 public class EventController {
-
     private final CollectorService collectorService;
 
     @PostMapping(value = "/sensors")
     public void collectSensors(@RequestBody SensorEvent event) {
         log.info("Обращение на /sensors с событием {}", event.toString());
         collectorService.sendSensorEvent(event);
-
     }
 
     @PostMapping(value = "/hubs")
@@ -30,5 +28,4 @@ public class EventController {
         log.info("Обращение на /hubs с событием {}", event.toString());
         collectorService.sendHubEvent(event);
     }
-
 }

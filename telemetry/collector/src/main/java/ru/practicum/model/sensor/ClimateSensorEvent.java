@@ -19,5 +19,4 @@ public class ClimateSensorEvent extends SensorEvent {
     public SensorEventType getType() {
         return SensorEventType.CLIMATE_SENSOR_EVENT;
     }
-
 }

@@ -17,8 +17,6 @@ import java.util.Properties;
 @RequiredArgsConstructor
 @Configuration
 public class EventClientConfiguration {
-
-
     @Value("${spring.kafka.producer.bootstrap-servers}")
     private String bootstrapServers;
     @Value("${spring.kafka.producer.key-serializer}")

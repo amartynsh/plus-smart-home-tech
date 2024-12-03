@@ -9,7 +9,6 @@ import ru.practicum.model.hub.constants.HubEventType;
 
 import java.time.Instant;
 
-
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
         include = JsonTypeInfo.As.EXISTING_PROPERTY,
@@ -33,5 +32,4 @@ public abstract class HubEvent {
     private HubEventType type;
 
     public abstract HubEventType getType();
-
 }

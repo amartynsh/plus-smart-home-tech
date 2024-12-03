@@ -9,4 +9,3 @@ public interface EventClient {
 
     void stop();
 }
-
