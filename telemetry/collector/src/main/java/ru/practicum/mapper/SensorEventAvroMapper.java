@@ -5,8 +5,8 @@ import ru.practicum.model.sensor.*;
 import ru.yandex.practicum.kafka.telemetry.event.*;
 
 @Slf4j
-public class SensorEventMapper {
-    public static SensorEventAvro map(SensorEvent event) {
+public class SensorEventAvroMapper {
+    public static SensorEventAvro mapToAvro(SensorEvent event) {
         log.info("Начали маппинг SensorEvent");
         switch (event.getType()) {
             case LIGHT_SENSOR_EVENT:

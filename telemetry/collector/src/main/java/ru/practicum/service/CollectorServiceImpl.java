@@ -5,8 +5,8 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.practicum.kafka.EventClient;
-import ru.practicum.mapper.HubEventMapper;
-import ru.practicum.mapper.SensorEventMapper;
+import ru.practicum.mapper.HubEventAvroMapper;
+import ru.practicum.mapper.SensorEventAvroMapper;
 import ru.practicum.model.hub.HubEvent;
 import ru.practicum.model.sensor.SensorEvent;
 import ru.yandex.practicum.kafka.telemetry.event.HubEventAvro;
@@ -30,7 +30,7 @@ public class CollectorServiceImpl implements CollectorService {
     @Override
     public void sendSensorEvent(SensorEvent event) {
         log.info("Началась обработка SensorEvent {}", event.toString());
-        SensorEventAvro sensorEventAvro = SensorEventMapper.map(event);
+        SensorEventAvro sensorEventAvro = SensorEventAvroMapper.mapToAvro(event);
         eventClient.getProducer().send(new ProducerRecord<>(sensorTopic,
                 sensorEventAvro));
         log.info("Топик: {}", sensorTopic);
@@ -40,7 +40,7 @@ public class CollectorServiceImpl implements CollectorService {
     @Override
     public void sendHubEvent(HubEvent event) {
         log.info("Началась обработка HubEvent {}", event.toString());
-        HubEventAvro hubEventAvro = HubEventMapper.map(event);
+        HubEventAvro hubEventAvro = HubEventAvroMapper.mapToAvro(event);
         eventClient.getProducer().send(new ProducerRecord<>(hubTopic,
                 hubEventAvro));
         log.info("Топик: {}", hubTopic);

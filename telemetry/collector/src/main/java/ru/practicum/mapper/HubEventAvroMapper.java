@@ -8,9 +8,9 @@ import ru.yandex.practicum.kafka.telemetry.event.*;
 import java.util.stream.Collectors;
 
 @Slf4j
-public class HubEventMapper {
+public class HubEventAvroMapper {
 
-    public static HubEventAvro map(HubEvent event) {
+    public static HubEventAvro mapToAvro(HubEvent event) {
         log.info("Начали маппинг");
         switch (event.getType()) {
             case HubEventType.DEVICE_ADDED:
