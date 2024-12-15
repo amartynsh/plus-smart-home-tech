@@ -20,20 +20,13 @@ public class EventsAvroSerializer implements Serializer<SpecificRecordBase> {
     public byte[] serialize(String topic, SpecificRecordBase data) {
 
         try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
-            log.info("serialize start");
             byte[] result = null;
             encoder = encoderFactory.binaryEncoder(out, encoder);
             if (data != null) {
-                log.info("serialize start1");
                 DatumWriter<SpecificRecordBase> writer = new SpecificDatumWriter<>(data.getSchema());
-                log.info("Схема топика: " + data.getSchema());
-                log.info("serialize start2");
                 writer.write(data, encoder);
-                log.info("serialize start3");
                 encoder.flush();
-                log.info("serialize start4");
                 result = out.toByteArray();
-                log.info("serialize end");
             }
             return result;
         } catch (IOException ex) {

@@ -25,7 +25,7 @@ public class CollectorServiceImpl implements CollectorService {
 
     @Override
     public void sendSensorEvent(SensorEventAvro event) {
-        log.info("Началась обработка SensorEvent {}", event.toString());
+        log.info("Готовим сообщение SensorEvent к отправке: {}", getClass());
         eventClient.getProducer().send(new ProducerRecord<>(sensorTopic,
                 event));
         log.info("Топик: {}", sensorTopic);
@@ -34,7 +34,7 @@ public class CollectorServiceImpl implements CollectorService {
 
     @Override
     public void sendHubEvent(HubEventAvro event) {
-        log.info("Началась обработка HubEvent {}", event.toString());
+        log.info("Готовим сообщение HubEvent к отправке: {}", getClass());
         eventClient.getProducer().send(new ProducerRecord<>(hubTopic,
                 event));
         log.info("Топик: {}", hubTopic);

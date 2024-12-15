@@ -1,9 +1,9 @@
-package ru.practicum.mapper.proto;
+package ru.practicum.handlers.sensor;
 
 import ru.yandex.practicum.grpc.telemetry.event.SensorEventProto;
-import ru.yandex.practicum.kafka.telemetry.event.SensorEventAvro;
 
 public interface SensorEventHandler {
     SensorEventProto.PayloadCase getMessageType();
-    public void handle(SensorEventProto eventProto);
+
+    void handle(SensorEventProto eventProto);
 }
