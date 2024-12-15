@@ -7,3 +7,6 @@ spring:
     topics:
       sensor-topic: telemetry.sensors.v1
       hub-topic: telemetry.hubs.v1
+grpc:
+  server:
+    port: 9090
