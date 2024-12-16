@@ -16,7 +16,7 @@ import java.util.Properties;
 @Slf4j
 @RequiredArgsConstructor
 @Configuration
-public class EventClientConfiguration {
+public class EventProducerConfiguration {
     @Value("${spring.kafka.producer.bootstrap-servers}")
     private String bootstrapServers;
     @Value("${spring.kafka.producer.key-serializer}")
@@ -25,8 +25,8 @@ public class EventClientConfiguration {
     private String valueSerializer;
 
     @Bean
-    EventClient getClient() {
-        return new EventClient() {
+    EventProducer getClient() {
+        return new EventProducer() {
 
             private Producer<String, SpecificRecordBase> producer;
 

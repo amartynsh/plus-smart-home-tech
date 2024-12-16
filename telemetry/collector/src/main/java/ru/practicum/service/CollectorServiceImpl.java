@@ -4,14 +4,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import ru.practicum.kafka.EventClient;
+import ru.practicum.kafka.EventProducer;
 import ru.yandex.practicum.kafka.telemetry.event.HubEventAvro;
 import ru.yandex.practicum.kafka.telemetry.event.SensorEventAvro;
 
 @Slf4j
 @Service
 public class CollectorServiceImpl implements CollectorService {
-    private final EventClient eventClient;
+    private final EventProducer eventClient;
 
     @Value("${spring.kafka.topics.sensor-topic}")
     private String sensorTopic;
@@ -19,7 +19,7 @@ public class CollectorServiceImpl implements CollectorService {
     @Value("${spring.kafka.topics.hub-topic}")
     private String hubTopic;
 
-    public CollectorServiceImpl(EventClient eventClient) {
+    public CollectorServiceImpl(EventProducer eventClient) {
         this.eventClient = eventClient;
     }
 
