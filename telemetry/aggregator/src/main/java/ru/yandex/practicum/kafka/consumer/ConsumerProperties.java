@@ -1,14 +1,14 @@
 package ru.yandex.practicum.kafka.consumer;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.Properties;
 
+@Slf4j
 @Configuration
 public class ConsumerProperties {
-    @Value("${spring.kafka.topics.sensor-topic}")
-    public static String sensorTopic;
     @Value("${spring.kafka.consumer.bootstrap-servers}")
     private String bootstrapServers;
     @Value("${spring.kafka.consumer.key-deserializer}")
@@ -28,7 +28,6 @@ public class ConsumerProperties {
 
     public Properties getConfig() {
         Properties properties = new Properties();
-
         properties.put(org.apache.kafka.clients.consumer.ConsumerConfig.CLIENT_ID_CONFIG, clientId);
         properties.put(org.apache.kafka.clients.consumer.ConsumerConfig.GROUP_ID_CONFIG, groupId);
         properties.put(org.apache.kafka.clients.consumer.ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
@@ -37,9 +36,6 @@ public class ConsumerProperties {
         properties.put(org.apache.kafka.clients.consumer.ConsumerConfig.MAX_POLL_RECORDS_CONFIG, maxPollRecords);
         properties.put(org.apache.kafka.clients.consumer.ConsumerConfig.FETCH_MAX_BYTES_CONFIG, fetchMaxBytes);
         properties.put(org.apache.kafka.clients.consumer.ConsumerConfig.MAX_PARTITION_FETCH_BYTES_CONFIG, maxPartitionFetchBytes);
-
         return properties;
-
     }
-
 }

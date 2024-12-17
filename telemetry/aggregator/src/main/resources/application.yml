@@ -13,7 +13,8 @@ spring:
       max-poll-records: 100
       fetch-max-bytes: 3072000
       max-partition-fetch-bytes: 307200
-  topics:
-    sensor-topic: telemetry.sensors.v1
-    hub-topic: telemetry.hubs.v1
-    snapshot-topic: telemetry.snapshots.v1
+      consume-attempts-timeout-ms: 1000
+    topics:
+      sensor-topic: telemetry.sensors.v1
+      hub-topic: telemetry.hubs.v1
+      snapshot-topic: telemetry.snapshots.v1

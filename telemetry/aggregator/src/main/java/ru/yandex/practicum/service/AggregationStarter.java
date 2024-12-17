@@ -9,7 +9,9 @@ import org.apache.kafka.clients.consumer.OffsetAndMetadata;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.TopicPartition;
 import org.apache.kafka.common.errors.WakeupException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import ru.yandex.practicum.kafka.KafkaTopics;
 import ru.yandex.practicum.kafka.consumer.ConsumerProperties;
 import ru.yandex.practicum.kafka.producer.EventProducer;
 import ru.yandex.practicum.kafka.telemetry.event.SensorEventAvro;
@@ -18,25 +20,20 @@ import ru.yandex.practicum.kafka.telemetry.event.SensorsSnapshotAvro;
 import java.time.Duration;
 import java.util.*;
 
-/**
- * Класс AggregationStarter, ответственный за запуск агрегации данных.
- */
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class AggregationStarter {
-    private static final Duration CONSUME_ATTEMPT_TIMEOUT = Duration.ofMillis(1000);
-    private static final List<String> TOPICS = List.of("telemetry.sensors.v1");
+    @Value(value = "${spring.kafka.consumer.consume-attempts-timeout-ms}")
+    private Duration consumeAttemptTimeout;
     private static final Map<TopicPartition, OffsetAndMetadata> currentOffsets = new HashMap<>();// снимок состояния
-
     private final ConsumerProperties consumerConfig;
     private final AggregatorService aggregatorService;
     private final EventProducer eventProducer;
+    private final KafkaTopics kafkaTopics;
 
-    private String snapshotTopic = "telemetry.snapshots.v1";
 
     private static void manageOffsets(ConsumerRecord<String, SensorEventAvro> record, int count, KafkaConsumer<String, SensorEventAvro> consumer) {
-        // обновляем текущий оффсет для топика-партиции
         currentOffsets.put(
                 new TopicPartition(record.topic(), record.partition()),
                 new OffsetAndMetadata(record.offset() + 1)
@@ -52,18 +49,14 @@ public class AggregationStarter {
     }
 
     public void start() {
-
         Properties config = consumerConfig.getConfig();
-
         KafkaConsumer<String, SensorEventAvro> consumer = new KafkaConsumer<>(config);
-
         Runtime.getRuntime().addShutdownHook(new Thread(consumer::wakeup));
 
         try {
-
-            consumer.subscribe(TOPICS);
+            consumer.subscribe(List.of(kafkaTopics.getSensorTopic()));
             while (true) {
-                ConsumerRecords<String, SensorEventAvro> records = consumer.poll(CONSUME_ATTEMPT_TIMEOUT);
+                ConsumerRecords<String, SensorEventAvro> records = consumer.poll(consumeAttemptTimeout);
 
                 int count = 0;
                 for (ConsumerRecord<String, SensorEventAvro> record : records) {
@@ -100,8 +93,7 @@ public class AggregationStarter {
         Optional<SensorsSnapshotAvro> result = aggregatorService.updateState(record.value());
         if (result.isPresent()) {
             log.info("Обновляем состояние агрегатора: {}", result.get());
-            eventProducer.getProducer().send(new ProducerRecord<>(snapshotTopic, result.get()));
+            eventProducer.getProducer().send(new ProducerRecord<>(kafkaTopics.getSnapshotTopic(), result.get()));
         }
-
     }
 }
