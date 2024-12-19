@@ -19,13 +19,15 @@ public class Condition {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    Sensor sensor;
+    @JoinColumn(name = "sensor_id")
+    private Sensor sensor;
     @Enumerated(EnumType.STRING)
     ConditionType type;
     @Enumerated(EnumType.STRING)
     ConditionOperation operation;
     @Column(name = "value")
     Integer value;
-    @ManyToMany(mappedBy = "conditions")
-    List<Scenario> scenarios;
+    @ManyToOne
+    @JoinColumn(name = "scenario_id")
+    private Scenario scenario;
 }

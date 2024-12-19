@@ -7,5 +7,6 @@ import ru.yandex.practicum.model.Condition;
 
 @Repository
 public interface ConditionRepository extends JpaRepository<Condition, Long> {
+    void deleteAllByScenarioId (Long id);
 
 }

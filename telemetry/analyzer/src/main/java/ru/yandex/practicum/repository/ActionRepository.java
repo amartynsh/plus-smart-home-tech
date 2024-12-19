@@ -7,4 +7,5 @@ import ru.yandex.practicum.model.*;
 @Repository
 public interface ActionRepository extends JpaRepository<Action, Long> {
 
+    void deleteAllByScenarioId(Long id);
 }

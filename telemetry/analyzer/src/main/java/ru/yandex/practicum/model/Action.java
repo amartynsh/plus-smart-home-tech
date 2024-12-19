@@ -20,9 +20,11 @@ public class Action {
     private Long id;
     @Enumerated(EnumType.STRING)
     private ActionType type;
+    @Column(name = "value")
     private Integer value;
-    @ManyToMany
-    List<Scenario> scenario;
+    @ManyToOne
+    @JoinColumn(name = "scenario_id")
+    private Scenario scenario;
     @ManyToOne
     @JoinColumn(name = "sensor_id")
     private Sensor sensor;

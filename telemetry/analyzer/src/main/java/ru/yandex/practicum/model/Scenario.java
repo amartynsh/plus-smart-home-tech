@@ -14,28 +14,19 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
+
 public class Scenario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
     @Column(name = "hub_id")
-    String hubId;
-    String name;
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "scenario_conditions",
-            joinColumns = @JoinColumn(name = "scenario_id"),
-            inverseJoinColumns = @JoinColumn(name = "condition_id")
-    )
-    List<Condition> conditions;
-
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "scenario_actions",
-            joinColumns = @JoinColumn(name = "scenario_id"),
-            inverseJoinColumns = @JoinColumn(name = "action_id")
-    )
-    List<Action> actions;
-
+    private String hubId;
+    @Column(name = "name")
+    private String name;
+    @OneToMany(mappedBy = "scenario", fetch = FetchType.EAGER)
+    @Builder.Default
+    private List<Condition> conditions = new ArrayList<>();
+    @OneToMany(mappedBy = "scenario")
+    @Builder.Default
+    private List<Action> actions = new ArrayList<>();
 }
