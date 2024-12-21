@@ -1,19 +1,15 @@
 package ru.yandex.practicum.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.util.List;
+import lombok.*;
 
 @Entity
 @Table(name = "conditions")
-@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 public class Condition {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,4 +26,15 @@ public class Condition {
     @ManyToOne
     @JoinColumn(name = "scenario_id")
     private Scenario scenario;
+
+    @Override
+    public String toString() {
+        return "Condition{" +
+                "id=" + id +
+                ", sensor=" + sensor +
+                ", type=" + type +
+                ", operation=" + operation +
+                ", value=" + value +
+                '}';
+    }
 }

@@ -2,7 +2,6 @@ package ru.yandex.practicum.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.experimental.FieldDefaults;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +25,16 @@ public class Scenario {
     @OneToMany(mappedBy = "scenario", fetch = FetchType.EAGER)
     @Builder.Default
     private List<Condition> conditions = new ArrayList<>();
-    @OneToMany(mappedBy = "scenario")
+    @OneToMany(mappedBy = "scenario", fetch = FetchType.EAGER)
     @Builder.Default
     private List<Action> actions = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "Scenario{" +
+                "name='" + name + '\'' +
+                ", hubId='" + hubId + '\'' +
+                ", id=" + id +
+                '}';
+    }
 }

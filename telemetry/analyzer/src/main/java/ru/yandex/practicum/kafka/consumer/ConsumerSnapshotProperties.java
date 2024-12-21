@@ -7,19 +7,22 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.Properties;
 
+
 @Getter
+
+
 @Slf4j
 @Configuration
-public class ConsumerProperties {
+public class ConsumerSnapshotProperties {
     @Value("${spring.kafka.consumer.bootstrap-servers}")
     private String bootstrapServers;
     @Value("${spring.kafka.consumer.key-deserializer}")
     private String keyDeserializer;
-    @Value("${spring.kafka.consumer.value-hub-deserializer}")
+    @Value("${spring.kafka.consumer.value-snapshot-deserializer}")
     private String valueDeserializer;
-    @Value("${spring.kafka.consumer.client-id}")
+    @Value("${spring.kafka.consumer.client-id-analyzer}")
     private String clientId;
-    @Value("${spring.kafka.consumer.group-id}")
+    @Value("${spring.kafka.consumer.group-id-analyzer}")
     private String groupId;
     @Value("${spring.kafka.consumer.max-poll-records}")
     private String maxPollRecords;
@@ -39,7 +42,6 @@ public class ConsumerProperties {
         properties.put(org.apache.kafka.clients.consumer.ConsumerConfig.MAX_POLL_RECORDS_CONFIG, maxPollRecords);
         properties.put(org.apache.kafka.clients.consumer.ConsumerConfig.FETCH_MAX_BYTES_CONFIG, fetchMaxBytes);
         properties.put(org.apache.kafka.clients.consumer.ConsumerConfig.MAX_PARTITION_FETCH_BYTES_CONFIG, maxPartitionFetchBytes);
-        log.info("ConsumerProperties!!!!!!!!!!!!: {}", properties);
         return properties;
     }
 }

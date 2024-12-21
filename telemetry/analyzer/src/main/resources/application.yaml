@@ -20,9 +20,12 @@ spring:
     consumer:
       bootstrap-servers: localhost:9092
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-sensor-deserializer: ru.yandex.practicum.deserializer.HubeventDeserializer
+      value-hub-deserializer: ru.yandex.practicum.deserializer.HubEventDeserializer
+      value-snapshot-deserializer: ru.yandex.practicum.deserializer.SnapshotEventDeserializer
       client-id: sensor-consumer
+      client-id-analyzer: analyzer-consumer
       group-id: group-practicum
+      group-id-analyzer: group-analyzer
       max-poll-records: 100
       fetch-max-bytes: 3072000
       max-partition-fetch-bytes: 307200
@@ -31,13 +34,10 @@ spring:
       bootstrap-servers: localhost:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: ru.yandex.practicum.serializer.AvroSerializer
-
     topics:
       sensor-topic: telemetry.sensors.v1
       hub-topic: telemetry.hubs.v1
       snapshot-topic: telemetry.snapshots.v1
-
-
 grpc:
   client:
     hub-router:

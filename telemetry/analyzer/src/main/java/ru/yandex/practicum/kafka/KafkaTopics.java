@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Getter
 @Setter
-@ConfigurationProperties (prefix = "spring.kafka.topics")
+@ConfigurationProperties(prefix = "spring.kafka.topics")
 public class KafkaTopics {
     private String sensorTopic;
     private String hubTopic;

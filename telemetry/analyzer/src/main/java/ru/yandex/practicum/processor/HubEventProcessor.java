@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import ru.yandex.practicum.kafka.KafkaTopics;
 import ru.yandex.practicum.kafka.consumer.ConsumerProperties;
 import ru.yandex.practicum.kafka.telemetry.event.HubEventAvro;
-import ru.yandex.practicum.service.HubEventServiceImpl;
+import ru.yandex.practicum.service.HubEventService;
 
 import java.time.Duration;
 import java.util.HashMap;
@@ -31,7 +31,7 @@ public class HubEventProcessor implements Runnable {
     private Duration consumeAttemptTimeout;
     private final Map<TopicPartition, OffsetAndMetadata> currentOffsets = new HashMap<>();// снимок состояния
     private final ConsumerProperties consumerConfig;
-    private final HubEventServiceImpl hubEventService;
+    private final HubEventService hubEventService;
     private final KafkaTopics kafkaTopics;
 
     @Override
@@ -43,9 +43,7 @@ public class HubEventProcessor implements Runnable {
         try {
             consumer.subscribe(List.of(kafkaTopics.getHubTopic()));
             while (true) {
-                consumer.commitAsync();
                 ConsumerRecords<String, HubEventAvro> records = consumer.poll(consumeAttemptTimeout);
-
                 int count = 0;
                 for (ConsumerRecord<String, HubEventAvro> record : records) {
                     // обрабатываем очередную запись
@@ -55,21 +53,18 @@ public class HubEventProcessor implements Runnable {
                     count++;
                 }
                 // фиксируем максимальный оффсет обработанных записей
-
-
+                consumer.commitAsync();
             }
         } catch (WakeupException | InterruptedException ignores) {
             // игнорируем - закрываем консьюмер и продюсер в блоке finally
         } catch (Exception e) {
             log.error("Ошибка во время обработки событий от хабов", e);
         } finally {
-
             try {
                 consumer.commitSync(currentOffsets);
             } finally {
                 log.info("Закрываем консьюмер");
                 consumer.close();
-
             }
         }
     }
@@ -94,8 +89,6 @@ public class HubEventProcessor implements Runnable {
 
         log.info("топик = {}, партиция = {}, смещение = {}, значение: {}\n",
                 record.topic(), record.partition(), record.offset(), record.value());
-        //Обработка события
         hubEventService.handleEvent(record.value());
-        //Действие!!!
     }
 }

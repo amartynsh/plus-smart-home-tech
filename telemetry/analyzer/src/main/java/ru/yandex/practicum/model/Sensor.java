@@ -1,6 +1,9 @@
 package ru.yandex.practicum.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.*;
 
 
@@ -16,6 +19,14 @@ public class Sensor {
     private String id;
     @Column(name = "hub_id")
     private String hubId;
+
+    @Override
+    public String toString() {
+        return "Sensor{" +
+                "id='" + id + '\'' +
+                ", hubId='" + hubId + '\'' +
+                '}';
+    }
 }
 
 

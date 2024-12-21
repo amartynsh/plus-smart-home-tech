@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import ru.yandex.practicum.model.Sensor;
 import ru.yandex.practicum.kafka.telemetry.event.*;
 import ru.yandex.practicum.model.*;
 import ru.yandex.practicum.repository.ActionRepository;
@@ -24,7 +23,6 @@ public class ScenarioAddedHubHandler implements HubEventHandler {
     private final ActionRepository actionRepository;
     private final ConditionRepository conditionRepository;
     private final ScenarioRepository scenarioRepository;
-
 
     @Override
     public String getHubEventClassName() {
@@ -50,6 +48,17 @@ public class ScenarioAddedHubHandler implements HubEventHandler {
             log.info("Сценария не существует, поэтому создаем новый");
             scenario = avroToScenarioEntity(hubEventAvro, scenarioAddedEventAvro);
             log.info("Создали сценарий {}", scenario);
+            Scenario finalScenario = scenario;
+            List<Condition> conditions = new ArrayList<>(scenarioAddedEventAvro.getConditions().stream()
+                    .map(conditionAvro -> avroToConditionEntity(finalScenario, conditionAvro))
+                    .toList());
+            List<Action> actions = new ArrayList<>(scenarioAddedEventAvro.getActions().stream()
+                    .map(actionAvro -> toActionEntity(finalScenario, actionAvro))
+                    .toList());
+            scenarioWithId = scenarioRepository.save(scenario);
+            scenario.setConditions(conditions);
+            scenario.setActions(actions);
+
 
         } else {
             log.info("Начали обработку ELSE");
