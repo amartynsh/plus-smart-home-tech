@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 @Slf4j
@@ -27,9 +28,9 @@ import java.util.Properties;
 @RequiredArgsConstructor
 public class HubEventProcessor implements Runnable {
 
-    @Value(value = "${spring.kafka.consumer.consume-attempts-timeout-ms}")
+    @Value(value = "${spring.kafka.consumer-hub.consume-attempts-timeout-ms}")
     private Duration consumeAttemptTimeout;
-    private final Map<TopicPartition, OffsetAndMetadata> currentOffsets = new HashMap<>();// снимок состояния
+    private final ConcurrentHashMap<TopicPartition, OffsetAndMetadata> currentOffsets = new ConcurrentHashMap<>();// снимок состояния
     private final ConsumerProperties consumerConfig;
     private final HubEventService hubEventService;
     private final KafkaTopics kafkaTopics;

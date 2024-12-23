@@ -25,7 +25,7 @@ import java.util.Properties;
 @Component
 @RequiredArgsConstructor
 public class SnapshotProcessor implements Runnable {
-    @Value(value = "${spring.kafka.consumer.consume-attempts-timeout-ms}")
+    @Value(value = "${spring.kafka.consumer-snapshot.consume-attempts-timeout-ms}")
     private Duration consumeAttemptTimeout;
     private final Map<TopicPartition, OffsetAndMetadata> currentOffsets = new HashMap<>();// снимок состояния
     private final ConsumerSnapshotProperties consumerConfig;

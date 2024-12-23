@@ -17,15 +17,22 @@ spring:
       hibernate:
         format_sql: true
   kafka:
-    consumer:
+    consumer-snapshot:
       bootstrap-servers: localhost:9092
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-hub-deserializer: ru.yandex.practicum.deserializer.HubEventDeserializer
-      value-snapshot-deserializer: ru.yandex.practicum.deserializer.SnapshotEventDeserializer
+      value-deserializer: ru.yandex.practicum.deserializer.SnapshotEventDeserializer
       client-id: sensor-consumer
-      client-id-analyzer: analyzer-consumer
       group-id: group-practicum
-      group-id-analyzer: group-analyzer
+      max-poll-records: 100
+      fetch-max-bytes: 3072000
+      max-partition-fetch-bytes: 307200
+      consume-attempts-timeout-ms: 1000
+    consumer-hub:
+      bootstrap-servers: localhost:9092
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: ru.yandex.practicum.deserializer.HubEventDeserializer
+      client-id: analyzer-consumer
+      group-id: group-analyzer
       max-poll-records: 100
       fetch-max-bytes: 3072000
       max-partition-fetch-bytes: 307200

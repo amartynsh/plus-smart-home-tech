@@ -18,11 +18,11 @@ public class Condition {
     @JoinColumn(name = "sensor_id")
     private Sensor sensor;
     @Enumerated(EnumType.STRING)
-    ConditionType type;
+    private ConditionType type;
     @Enumerated(EnumType.STRING)
-    ConditionOperation operation;
+    private ConditionOperation operation;
     @Column(name = "value")
-    Integer value;
+    private Integer value;
     @ManyToOne
     @JoinColumn(name = "scenario_id")
     private Scenario scenario;

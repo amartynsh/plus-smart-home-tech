@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import ru.yandex.practicum.exception.NotFoundException;
 import ru.yandex.practicum.kafka.telemetry.event.*;
 import ru.yandex.practicum.model.*;
 import ru.yandex.practicum.repository.ActionRepository;
@@ -11,7 +12,6 @@ import ru.yandex.practicum.repository.ConditionRepository;
 import ru.yandex.practicum.repository.ScenarioRepository;
 import ru.yandex.practicum.repository.SensorRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,7 +41,7 @@ public class ScenarioAddedHubHandler implements HubEventHandler {
         Scenario scenarioWithId = new Scenario();
 
         if (checkHubEvent(hubEventAvro)) {
-            throw new RuntimeException("Sensor из запроса отсутствует");
+            throw new NotFoundException("Sensor из запроса отсутствует");
         }
 
         if (!scenarioOld.isPresent()) {
@@ -49,12 +49,12 @@ public class ScenarioAddedHubHandler implements HubEventHandler {
             scenario = avroToScenarioEntity(hubEventAvro, scenarioAddedEventAvro);
             log.info("Создали сценарий {}", scenario);
             Scenario finalScenario = scenario;
-            List<Condition> conditions = new ArrayList<>(scenarioAddedEventAvro.getConditions().stream()
+            List<Condition> conditions =scenarioAddedEventAvro.getConditions().stream()
                     .map(conditionAvro -> avroToConditionEntity(finalScenario, conditionAvro))
-                    .toList());
-            List<Action> actions = new ArrayList<>(scenarioAddedEventAvro.getActions().stream()
+                    .toList();
+            List<Action> actions = scenarioAddedEventAvro.getActions().stream()
                     .map(actionAvro -> toActionEntity(finalScenario, actionAvro))
-                    .toList());
+                    .toList();
             scenarioWithId = scenarioRepository.save(scenario);
             scenario.setConditions(conditions);
             scenario.setActions(actions);
@@ -65,12 +65,12 @@ public class ScenarioAddedHubHandler implements HubEventHandler {
             scenario = scenarioOld.get();
 
             Scenario finalScenario = scenario;
-            List<Condition> conditions = new ArrayList<>(scenarioAddedEventAvro.getConditions().stream()
+            List<Condition> conditions = scenarioAddedEventAvro.getConditions().stream()
                     .map(conditionAvro -> avroToConditionEntity(finalScenario, conditionAvro))
-                    .toList());
-            List<Action> actions = new ArrayList<>(scenarioAddedEventAvro.getActions().stream()
+                    .toList();
+            List<Action> actions = scenarioAddedEventAvro.getActions().stream()
                     .map(actionAvro -> toActionEntity(finalScenario, actionAvro))
-                    .toList());
+                    .toList();
             scenarioWithId = scenarioRepository.save(scenario);
             scenario.setConditions(conditions);
             scenario.setActions(actions);
