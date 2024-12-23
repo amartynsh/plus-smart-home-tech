@@ -11,14 +11,12 @@ import org.apache.kafka.common.errors.WakeupException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.kafka.KafkaTopics;
-import ru.yandex.practicum.kafka.consumer.ConsumerProperties;
+import ru.yandex.practicum.kafka.consumer.ConsumerHubProperties;
 import ru.yandex.practicum.kafka.telemetry.event.HubEventAvro;
 import ru.yandex.practicum.service.HubEventService;
 
 import java.time.Duration;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -31,7 +29,7 @@ public class HubEventProcessor implements Runnable {
     @Value(value = "${spring.kafka.consumer-hub.consume-attempts-timeout-ms}")
     private Duration consumeAttemptTimeout;
     private final ConcurrentHashMap<TopicPartition, OffsetAndMetadata> currentOffsets = new ConcurrentHashMap<>();// снимок состояния
-    private final ConsumerProperties consumerConfig;
+    private final ConsumerHubProperties consumerConfig;
     private final HubEventService hubEventService;
     private final KafkaTopics kafkaTopics;
 

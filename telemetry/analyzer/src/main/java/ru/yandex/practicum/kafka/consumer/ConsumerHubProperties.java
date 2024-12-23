@@ -11,14 +11,13 @@ import java.util.Properties;
 @Getter
 @Slf4j
 @Component
-public class ConsumerSnapshotProperties {
 
+public class ConsumerHubProperties {
     @Autowired
-    @Qualifier("snapshot")
+    @Qualifier("hub")
     KafkaConsumerProperties config;
 
     public Properties getConfig() {
         return config.getConfig();
     }
-
 }
