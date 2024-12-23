@@ -11,7 +11,7 @@ import org.apache.kafka.common.errors.WakeupException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.kafka.KafkaTopics;
-import ru.yandex.practicum.kafka.consumer.ConsumerSnapshotProperties;
+import ru.yandex.practicum.kafka.consumer.ConfigClass;
 import ru.yandex.practicum.kafka.telemetry.event.SensorsSnapshotAvro;
 import ru.yandex.practicum.service.SnapshotService;
 
@@ -28,13 +28,13 @@ public class SnapshotProcessor implements Runnable {
     @Value(value = "${spring.kafka.consumer-snapshot.consume-attempts-timeout-ms}")
     private Duration consumeAttemptTimeout;
     private final Map<TopicPartition, OffsetAndMetadata> currentOffsets = new HashMap<>();// снимок состояния
-    private final ConsumerSnapshotProperties consumerConfig;
+    private final ConfigClass configClass;
     private final SnapshotService snapshotService;
     private final KafkaTopics kafkaTopics;
 
     @Override
     public void run() {
-        Properties config = consumerConfig.getConfig();
+        Properties config = configClass.getSnapshotProperites();
         KafkaConsumer<String, SensorsSnapshotAvro> consumer = new KafkaConsumer<>(config);
         Runtime.getRuntime().addShutdownHook(new Thread(consumer::wakeup));
 
