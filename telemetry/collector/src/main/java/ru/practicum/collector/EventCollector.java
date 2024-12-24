@@ -60,6 +60,7 @@ public class EventCollector extends CollectorControllerGrpc.CollectorControllerI
     public void collectHubEvent(HubEventProto request, StreamObserver<Empty> responseObserver) {
         try {
             if (hubEventHandlers.containsKey(request.getPayloadCase())) {
+                log.info("Обработка события из EventCollector {}", request.toString());
                 // если обработчик найден, передаём событие ему на обработку
                 hubEventHandlers.get(request.getPayloadCase()).handle(request);
             } else {
