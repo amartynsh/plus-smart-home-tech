@@ -10,8 +10,8 @@ import org.apache.kafka.common.TopicPartition;
 import org.apache.kafka.common.errors.WakeupException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import ru.yandex.practicum.kafka.KafkaTopics;
-import ru.yandex.practicum.kafka.consumer.ConfigClass;
+import ru.yandex.practicum.config.KafkaTopics;
+import ru.yandex.practicum.kafka.ConfigKafkaProperties;
 import ru.yandex.practicum.kafka.telemetry.event.SensorsSnapshotAvro;
 import ru.yandex.practicum.service.SnapshotService;
 
@@ -28,7 +28,7 @@ public class SnapshotProcessor implements Runnable {
     @Value(value = "${spring.kafka.consumer-snapshot.consume-attempts-timeout-ms}")
     private Duration consumeAttemptTimeout;
     private final Map<TopicPartition, OffsetAndMetadata> currentOffsets = new HashMap<>();// снимок состояния
-    private final ConfigClass configClass;
+    private final ConfigKafkaProperties configClass;
     private final SnapshotService snapshotService;
     private final KafkaTopics kafkaTopics;
 

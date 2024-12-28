@@ -1,6 +1,5 @@
 package ru.yandex.practicum.service;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -9,31 +8,37 @@ import org.apache.kafka.clients.consumer.OffsetAndMetadata;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.TopicPartition;
 import org.apache.kafka.common.errors.WakeupException;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import ru.yandex.practicum.kafka.KafkaTopics;
-import ru.yandex.practicum.kafka.consumer.ConsumerProperties;
+import ru.yandex.practicum.config.AppConfig;
+import ru.yandex.practicum.kafka.KafkaConfig;
 import ru.yandex.practicum.kafka.producer.EventProducer;
 import ru.yandex.practicum.kafka.telemetry.event.SensorEventAvro;
 import ru.yandex.practicum.kafka.telemetry.event.SensorsSnapshotAvro;
 
-import java.time.Duration;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @Component
-@RequiredArgsConstructor
+
 public class AggregationStarter {
-    @Value(value = "${spring.kafka.consumer.consume-attempts-timeout-ms}")
-    private Duration consumeAttemptTimeout;
-    private static final Map<TopicPartition, OffsetAndMetadata> currentOffsets = new HashMap<>();// снимок состояния
-    private final ConsumerProperties consumerConfig;
+    private static final Map<TopicPartition, OffsetAndMetadata> currentOffsets = new HashMap<>();
     private final AggregatorService aggregatorService;
     private final EventProducer eventProducer;
-    private final KafkaTopics kafkaTopics;
+    private final KafkaConfig kafkaConfig;
+    private final AppConfig appConfig;
 
+    public AggregationStarter(AggregatorService aggregatorService, EventProducer eventProducer, KafkaConfig kafkaConfig, AppConfig appConfig) {
+        this.aggregatorService = aggregatorService;
+        this.eventProducer = eventProducer;
+        this.kafkaConfig = kafkaConfig;
+        this.appConfig = appConfig;
+    }
 
-    private static void manageOffsets(ConsumerRecord<String, SensorEventAvro> record, int count, KafkaConsumer<String, SensorEventAvro> consumer) {
+    private static void manageOffsets(ConsumerRecord<String, SensorEventAvro> record, int count,
+                                      KafkaConsumer<String, SensorEventAvro> consumer) {
         currentOffsets.put(
                 new TopicPartition(record.topic(), record.partition()),
                 new OffsetAndMetadata(record.offset() + 1)
@@ -49,14 +54,14 @@ public class AggregationStarter {
     }
 
     public void start() {
-        Properties config = consumerConfig.getConfig();
-        KafkaConsumer<String, SensorEventAvro> consumer = new KafkaConsumer<>(config);
+
+        KafkaConsumer<String, SensorEventAvro> consumer = new KafkaConsumer<>(kafkaConfig.getConsumerProperties());
         Runtime.getRuntime().addShutdownHook(new Thread(consumer::wakeup));
 
         try {
-            consumer.subscribe(List.of(kafkaTopics.getSensorTopic()));
+            consumer.subscribe(List.of(appConfig.getTopics().getSensorTopic()));
             while (true) {
-                ConsumerRecords<String, SensorEventAvro> records = consumer.poll(consumeAttemptTimeout);
+                ConsumerRecords<String, SensorEventAvro> records = consumer.poll(appConfig.getConsumer().getConsumeAttemptsTimeoutMs());
 
                 int count = 0;
                 for (ConsumerRecord<String, SensorEventAvro> record : records) {
@@ -93,7 +98,8 @@ public class AggregationStarter {
         Optional<SensorsSnapshotAvro> result = aggregatorService.updateState(record.value());
         if (result.isPresent()) {
             log.info("Обновляем состояние агрегатора: {}", result.get());
-            eventProducer.getProducer().send(new ProducerRecord<>(kafkaTopics.getSnapshotTopic(), result.get()));
+            eventProducer.getProducer().send(new ProducerRecord<>(appConfig.getTopics().getSnapshotTopic(),
+                    result.get()));
         }
     }
 }

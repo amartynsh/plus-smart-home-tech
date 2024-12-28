@@ -6,28 +6,21 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.avro.specific.SpecificRecordBase;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
-import org.apache.kafka.clients.producer.ProducerConfig;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
+import ru.yandex.practicum.kafka.KafkaConfig;
 
 import java.util.Properties;
 
 @Slf4j
 @RequiredArgsConstructor
-@Configuration
+@Component
 public class EventProducerConfiguration {
-    @Value("${spring.kafka.producer.bootstrap-servers}")
-    private String bootstrapServers;
-    @Value("${spring.kafka.producer.key-serializer}")
-    private String keySerializer;
-    @Value("${spring.kafka.producer.value-serializer}")
-    private String valueSerializer;
+    private final KafkaConfig kafkaConfig;
 
     @Bean
     EventProducer getClient() {
         return new EventProducer() {
-
             private Producer<String, SpecificRecordBase> producer;
 
             @Override
@@ -39,14 +32,7 @@ public class EventProducerConfiguration {
             }
 
             private void initProducer() {
-                Properties config = new Properties();
-                config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
-                        bootstrapServers);
-                config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
-                        keySerializer);
-                config.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
-                        valueSerializer);
-
+                Properties config = kafkaConfig.getProducerProperties();
                 producer = new KafkaProducer<>(config);
             }
 
