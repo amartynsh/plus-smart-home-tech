@@ -4,18 +4,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import ru.practicum.kafka.EventClient;
-import ru.practicum.mapper.HubEventMapper;
-import ru.practicum.mapper.SensorEventMapper;
-import ru.practicum.model.hub.HubEvent;
-import ru.practicum.model.sensor.SensorEvent;
+import ru.practicum.kafka.EventProducer;
 import ru.yandex.practicum.kafka.telemetry.event.HubEventAvro;
 import ru.yandex.practicum.kafka.telemetry.event.SensorEventAvro;
 
 @Slf4j
 @Service
 public class CollectorServiceImpl implements CollectorService {
-    private final EventClient eventClient;
+    private final EventProducer eventClient;
 
     @Value("${spring.kafka.topics.sensor-topic}")
     private String sensorTopic;
@@ -23,27 +19,25 @@ public class CollectorServiceImpl implements CollectorService {
     @Value("${spring.kafka.topics.hub-topic}")
     private String hubTopic;
 
-    public CollectorServiceImpl(EventClient eventClient) {
+    public CollectorServiceImpl(EventProducer eventClient) {
         this.eventClient = eventClient;
     }
 
     @Override
-    public void sendSensorEvent(SensorEvent event) {
-        log.info("Началась обработка SensorEvent {}", event.toString());
-        SensorEventAvro sensorEventAvro = SensorEventMapper.map(event);
+    public void sendSensorEvent(SensorEventAvro event) {
+        log.info("Готовим сообщение SensorEvent к отправке: {}", getClass());
         eventClient.getProducer().send(new ProducerRecord<>(sensorTopic,
-                sensorEventAvro));
+                event));
         log.info("Топик: {}", sensorTopic);
-        log.info("Обработка SensorEvent завершена, в KAFKA ушло:  {}", sensorEventAvro);
+        log.info("Обработка SensorEvent завершена, в KAFKA ушло:  {}", event);
     }
 
     @Override
-    public void sendHubEvent(HubEvent event) {
-        log.info("Началась обработка HubEvent {}", event.toString());
-        HubEventAvro hubEventAvro = HubEventMapper.map(event);
+    public void sendHubEvent(HubEventAvro event) {
+        log.info("Готовим сообщение HubEvent к отправке: {}", getClass());
         eventClient.getProducer().send(new ProducerRecord<>(hubTopic,
-                hubEventAvro));
+                event));
         log.info("Топик: {}", hubTopic);
-        log.info("Обработка HubEvent завершена, в KAFKA ушло: {}", hubEventAvro);
+        log.info("Обработка HubEvent завершена, в KAFKA ушло: {}", event);
     }
 }

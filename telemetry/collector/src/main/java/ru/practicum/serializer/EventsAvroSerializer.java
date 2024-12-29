@@ -1,5 +1,6 @@
 package ru.practicum.serializer;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.avro.io.BinaryEncoder;
 import org.apache.avro.io.DatumWriter;
 import org.apache.avro.io.EncoderFactory;
@@ -11,11 +12,13 @@ import org.apache.kafka.common.serialization.Serializer;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+@Slf4j
 public class EventsAvroSerializer implements Serializer<SpecificRecordBase> {
     private final EncoderFactory encoderFactory = EncoderFactory.get();
     private BinaryEncoder encoder;
 
     public byte[] serialize(String topic, SpecificRecordBase data) {
+
         try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
             byte[] result = null;
             encoder = encoderFactory.binaryEncoder(out, encoder);
