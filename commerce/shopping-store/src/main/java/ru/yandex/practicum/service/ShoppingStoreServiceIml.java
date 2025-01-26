@@ -3,8 +3,6 @@ package ru.yandex.practicum.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.errorhandler.exceptions.NotFoundException;
 import ru.yandex.practicum.mapper.ProductMapper;
@@ -50,7 +48,9 @@ public class ShoppingStoreServiceIml implements ShoppingStoreService {
         if (!productRepository.existsById(productId)) {
             throw new NotFoundException("Продукта с id " + productId + " не существует");
         }
-        productRepository.deleteById(productId);
+        Product product = productRepository.findById(productId).get();
+        product.setProductState(ProductState.DEACTIVATE);
+        productRepository.save(product);
         return true;
     }
 
