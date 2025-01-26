@@ -7,4 +7,5 @@ CREATE TABLE IF NOT EXISTS products (
     product_state VARCHAR(200) NOT NULL,
     rating DOUBLE PRECISION,
     product_category VARCHAR(200) NOT NULL,
-    price DOUBLE PRECISION NOT NULL,
+    price DOUBLE PRECISION NOT NULL
+);
