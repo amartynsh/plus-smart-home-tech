@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.yandex.practicum.errorhandler.exceptions.NotFoundException;
+import ru.yandex.practicum.errorhandler.exceptions.ValidationException;
 
 @Slf4j
 @RestControllerAdvice
@@ -17,6 +18,11 @@ public class ErrorHandler {
         return createMessage(e, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorMessage handleValdationException(ValidationException e) {
+        return createMessage(e, HttpStatus.BAD_REQUEST);
+    }
     private ErrorMessage createMessage(Exception e, HttpStatus httpstatus) {
         return ErrorMessage.builder()
                 .cause(e.getCause())

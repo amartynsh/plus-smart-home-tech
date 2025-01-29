@@ -10,7 +10,7 @@ import ru.yandex.practicum.model.cart.ShoppingCartDto;
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface ShoppingCartMapper {
 
-    @Mapping(target = "shoppingCartId", source = "cartId")
+    // @Mapping(target = "shoppingCartId", source = "шd")
     ShoppingCartDto toDto(ShoppingCart shoppingCart);
 
     ShoppingCart toEntity(ShoppingCartDto shoppingCartDto);

@@ -11,34 +11,34 @@ import ru.yandex.practicum.model.cart.ChangeProductQuantityRequest;
 import ru.yandex.practicum.model.cart.ShoppingCartDto;
 import ru.yandex.practicum.service.ShoppingCartServiceImpl;
 
-import java.rmi.server.UID;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
 @Validated
 @RequestMapping("/api/v1/shopping-cart")
-public class ShoppingCartController  implements ShoppingCartClient {
+public class ShoppingCartController implements ShoppingCartClient {
     private final ShoppingCartServiceImpl shoppingCartService;
 
     @Override
     public ShoppingCartDto getShoppingCart(String username) {
-        return null;
+        return shoppingCartService.getShoppingCart(username);
     }
 
     @Override
-    public ShoppingCartDto addProductToCart(String username, Map<UID, Integer> products) {
-        return null;
+    public ShoppingCartDto addProductToCart(String username, Map<UUID, Long> products) {
+        return shoppingCartService.addProduct(username, products);
     }
 
     @Override
     public void deactivateCart(String username) {
-
+        shoppingCartService.deactivateCart(username);
     }
 
     @Override
-    public ShoppingCartDto removeProductFromCart(String username, Map<UID, Integer> products) {
-        return null;
+    public ShoppingCartDto removeProductFromCart(String username, Map<UUID, Long> products) {
+        return shoppingCartService.removeProduct(username, products);
     }
 
     @Override

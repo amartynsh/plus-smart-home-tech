@@ -9,6 +9,7 @@ import ru.yandex.practicum.model.cart.ShoppingCartDto;
 
 import java.rmi.server.UID;
 import java.util.Map;
+import java.util.UUID;
 
 @FeignClient(name = "shopping-cart")
 public interface ShoppingCartClient {
@@ -18,14 +19,14 @@ public interface ShoppingCartClient {
 
     @PutMapping
     ShoppingCartDto addProductToCart(@RequestParam("username") String username,
-                                     @RequestBody Map<UID, Integer> products);
+                                     @RequestBody Map<UUID, Long> products);
 
     @DeleteMapping
     void deactivateCart(@RequestParam("username") String username);
 
     @PutMapping("/remove")
     ShoppingCartDto removeProductFromCart(@RequestParam("username") String username,
-                                          @RequestBody Map<UID, Integer> products);
+                                          @RequestBody Map<UUID, Long> products);
 
     @PostMapping("/change-quantity")
     ProductDto changeProductQuantity(@RequestParam("username") String username,
