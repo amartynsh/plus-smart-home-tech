@@ -10,6 +10,6 @@ import java.util.UUID;
 @Setter
 public class AddProductToWarehouseRequest {
     private UUID productId;
-    @Min(value = 1 , message = "Нельзя добавить товар менее чем 1шт")
+    @Min(value = 1, message = "Нельзя добавить товар менее чем 1шт")
     private Integer quantity;
 }

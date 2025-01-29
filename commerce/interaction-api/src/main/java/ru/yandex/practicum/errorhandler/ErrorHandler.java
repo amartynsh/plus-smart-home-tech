@@ -22,11 +22,13 @@ public class ErrorHandler {
     public ErrorMessage handleValdationException(ValidationException e) {
         return createMessage(e, HttpStatus.BAD_REQUEST);
     }
+
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorMessage handleSpecifiedProductAlreadyInWarehouseException(SpecifiedProductAlreadyInWarehouseException e) {
         return createMessage(e, HttpStatus.BAD_REQUEST);
     }
+
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorMessage handleProductInShoppingCartLowQuantityInWarehouse(ProductInShoppingCartLowQuantityInWarehouse e) {

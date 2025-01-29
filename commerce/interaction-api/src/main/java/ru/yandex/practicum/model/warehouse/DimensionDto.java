@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class DimensionDto {
-    private Integer width;
-    private Integer height;
-    private Integer depth;
+    private Double width;
+    private Double height;
+    private Double depth;
 }

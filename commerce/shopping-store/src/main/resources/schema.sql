@@ -1,5 +1,5 @@
-CREATE TABLE IF NOT EXISTS products (
-    id UUID,
+create TABLE IF NOT EXISTS products (
+    id UUID NOT NULL PRIMARY KEY,
     name VARCHAR(200) NOT NULL,
     description VARCHAR(2000) NOT NULL,
     image_src VARCHAR(200),

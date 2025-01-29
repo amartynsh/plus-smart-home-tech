@@ -1,9 +1,7 @@
 package ru.yandex.practicum.model;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,6 +11,8 @@ import java.util.UUID;
 @Setter
 @Builder(toBuilder = true)
 @Entity(name = "carts")
+@AllArgsConstructor
+@RequiredArgsConstructor
 public class ShoppingCart {
     @ElementCollection
     @CollectionTable(name = "products_carts", joinColumns = @JoinColumn(name = "cart_id"))

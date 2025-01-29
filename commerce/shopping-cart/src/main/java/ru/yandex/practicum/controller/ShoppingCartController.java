@@ -5,12 +5,12 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.yandex.practicum.clients.ShoppingCartClient;
-import ru.yandex.practicum.model.ProductDto;
 import ru.yandex.practicum.model.cart.BookedProductsDto;
 import ru.yandex.practicum.model.cart.ChangeProductQuantityRequest;
 import ru.yandex.practicum.model.cart.ShoppingCartDto;
-import ru.yandex.practicum.service.ShoppingCartServiceImpl;
+import ru.yandex.practicum.service.ShoppingCartService;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -19,7 +19,7 @@ import java.util.UUID;
 @Validated
 @RequestMapping("/api/v1/shopping-cart")
 public class ShoppingCartController implements ShoppingCartClient {
-    private final ShoppingCartServiceImpl shoppingCartService;
+    private final ShoppingCartService shoppingCartService;
 
     @Override
     public ShoppingCartDto getShoppingCart(String username) {
@@ -37,17 +37,18 @@ public class ShoppingCartController implements ShoppingCartClient {
     }
 
     @Override
-    public ShoppingCartDto removeProductFromCart(String username, Map<UUID, Long> products) {
+    public ShoppingCartDto removeProductFromCart(String username, List<UUID> products) {
         return shoppingCartService.removeProduct(username, products);
     }
 
     @Override
-    public ProductDto changeProductQuantity(String username, ChangeProductQuantityRequest request) {
-        return null;
+    public ShoppingCartDto changeProductQuantity(String username, ChangeProductQuantityRequest request) {
+        return shoppingCartService.changeQuantity(username, request);
+
     }
 
     @Override
     public BookedProductsDto bookProducts(String username) {
-        return null;
+        return shoppingCartService.bookShoppingCartInWarehouse(username);
     }
 }

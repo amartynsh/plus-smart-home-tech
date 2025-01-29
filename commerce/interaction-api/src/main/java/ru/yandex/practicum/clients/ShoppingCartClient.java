@@ -2,11 +2,11 @@ package ru.yandex.practicum.clients;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
-import ru.yandex.practicum.model.ProductDto;
 import ru.yandex.practicum.model.cart.BookedProductsDto;
 import ru.yandex.practicum.model.cart.ChangeProductQuantityRequest;
 import ru.yandex.practicum.model.cart.ShoppingCartDto;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -23,13 +23,13 @@ public interface ShoppingCartClient {
     @DeleteMapping
     void deactivateCart(@RequestParam("username") String username);
 
-    @PutMapping("/remove")
+    @PostMapping("/remove")
     ShoppingCartDto removeProductFromCart(@RequestParam("username") String username,
-                                          @RequestBody Map<UUID, Long> products);
+                                          @RequestBody List<UUID> products);
 
     @PostMapping("/change-quantity")
-    ProductDto changeProductQuantity(@RequestParam("username") String username,
-                                     @RequestBody ChangeProductQuantityRequest request);
+    ShoppingCartDto changeProductQuantity(@RequestParam("username") String username,
+                                          @RequestBody ChangeProductQuantityRequest request);
 
     @PostMapping("/booking")
     BookedProductsDto bookProducts(@RequestParam("username") String username);

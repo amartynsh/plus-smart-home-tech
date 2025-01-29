@@ -54,7 +54,7 @@ public class WarehouseServiceImpl implements WarehouseService {
         }
         for (WarehouseProduct product : products) {
             if (product.getQuantity() < shoppingCartDto.getProducts().get(product.getProductId())) {
-                 throw new ProductInShoppingCartLowQuantityInWarehouse("Товара с  productId:" +
+                throw new ProductInShoppingCartLowQuantityInWarehouse("Товара с  productId:" +
                         product.getProductId() + " нет в достаточном количестве");
             }
         }

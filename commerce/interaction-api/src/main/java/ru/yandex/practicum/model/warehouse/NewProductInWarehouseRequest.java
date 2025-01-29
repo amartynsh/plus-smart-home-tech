@@ -12,6 +12,17 @@ public class NewProductInWarehouseRequest {
     private UUID productId;
     @Min(value = 1, message = "Вес должен быть больше 0")
     private Double weight;
-    private DimensionDto dimension;;
+    private DimensionDto dimension;
+    ;
     private Boolean fragile;
+
+    @Override
+    public String toString() {
+        return "NewProductInWarehouseRequest{" +
+                "productId=" + productId +
+                ", weight=" + weight +
+                ", dimension=" + dimension +
+                ", fragile=" + fragile +
+                '}';
+    }
 }
