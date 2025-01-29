@@ -14,5 +14,5 @@ public class BookedProductsDto {
     @NotNull
     private double deliveryVolume;
     @NotNull
-    private boolean  fragile;
+    private boolean fragile;
 }

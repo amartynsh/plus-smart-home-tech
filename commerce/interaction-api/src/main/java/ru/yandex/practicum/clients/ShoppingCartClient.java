@@ -7,7 +7,6 @@ import ru.yandex.practicum.model.cart.BookedProductsDto;
 import ru.yandex.practicum.model.cart.ChangeProductQuantityRequest;
 import ru.yandex.practicum.model.cart.ShoppingCartDto;
 
-import java.rmi.server.UID;
 import java.util.Map;
 import java.util.UUID;
 

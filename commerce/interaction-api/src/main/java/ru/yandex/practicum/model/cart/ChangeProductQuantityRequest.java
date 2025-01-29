@@ -12,5 +12,5 @@ import java.util.UUID;
 @Builder
 public class ChangeProductQuantityRequest {
     private UUID productId;
-    private Long  newQuantity;
+    private Long newQuantity;
 }

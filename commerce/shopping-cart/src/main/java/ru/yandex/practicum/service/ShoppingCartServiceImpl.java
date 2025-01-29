@@ -79,6 +79,4 @@ public class ShoppingCartServiceImpl {
         return shoppingCartRepository.findShoppingCartByUsername(username)
                 .orElseThrow(() -> new NotFoundException("Корзины для пользователя " + username + " не существует"));
     }
-
-
 }

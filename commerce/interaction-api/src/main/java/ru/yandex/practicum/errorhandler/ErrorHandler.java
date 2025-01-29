@@ -5,8 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import ru.yandex.practicum.errorhandler.exceptions.NotFoundException;
-import ru.yandex.practicum.errorhandler.exceptions.ValidationException;
+import ru.yandex.practicum.errorhandler.exceptions.*;
 
 @Slf4j
 @RestControllerAdvice
@@ -23,6 +22,22 @@ public class ErrorHandler {
     public ErrorMessage handleValdationException(ValidationException e) {
         return createMessage(e, HttpStatus.BAD_REQUEST);
     }
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorMessage handleSpecifiedProductAlreadyInWarehouseException(SpecifiedProductAlreadyInWarehouseException e) {
+        return createMessage(e, HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorMessage handleProductInShoppingCartLowQuantityInWarehouse(ProductInShoppingCartLowQuantityInWarehouse e) {
+        return createMessage(e, HttpStatus.BAD_REQUEST);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorMessage handleNoSpecifiedProductInWarehouseException(NoSpecifiedProductInWarehouseException e) {
+        return createMessage(e, HttpStatus.BAD_REQUEST);
+    }
+
     private ErrorMessage createMessage(Exception e, HttpStatus httpstatus) {
         return ErrorMessage.builder()
                 .cause(e.getCause())

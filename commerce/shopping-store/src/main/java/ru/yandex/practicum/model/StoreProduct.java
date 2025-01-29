@@ -5,12 +5,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.UUID;
+
 @Getter
 @Setter
 @Entity
 @Table(name = "products")
-public class Product {
-
+public class StoreProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")

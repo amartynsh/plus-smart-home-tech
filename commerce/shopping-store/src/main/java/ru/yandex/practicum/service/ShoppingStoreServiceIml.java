@@ -10,7 +10,6 @@ import ru.yandex.practicum.model.*;
 import ru.yandex.practicum.repository.ProductRepository;
 import ru.yandex.practicum.utils.Pagination;
 
-
 import java.util.List;
 import java.util.UUID;
 
@@ -67,6 +66,7 @@ public class ShoppingStoreServiceIml implements ShoppingStoreService {
             throw new NotFoundException("Продукта с id " + request.getProductId() + " не существует");
         }
     }
+
     @Override
     public ProductDto getProduct(UUID productId) {
         return productMapper.toDto(productRepository.findById(productId)

@@ -1,7 +1,6 @@
 package ru.yandex.practicum.mapper;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import ru.yandex.practicum.model.ShoppingCart;
 import ru.yandex.practicum.model.cart.ShoppingCartDto;
