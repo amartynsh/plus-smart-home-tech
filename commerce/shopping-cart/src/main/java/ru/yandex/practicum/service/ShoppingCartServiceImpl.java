@@ -65,7 +65,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         log.info("Начал работать метод removeProduct, на вход пришло username:{}, products: {}", username, products);
         ShoppingCart shoppingCart = getCartInternal(username);
         products.forEach(key -> {
-            if (shoppingCart.getProducts().containsKey(key)) {
+            if (!shoppingCart.getProducts().containsKey(key)) {
                 throw new ValidationException("Нет искомых товаров в корзине");
             }
         });
@@ -102,5 +102,4 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         return shoppingCartRepository.findShoppingCartByUsername(username)
                 .orElseThrow(() -> new NotFoundException("Корзины для пользователя " + username + " не существует"));
     }
-
 }

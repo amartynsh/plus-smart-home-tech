@@ -8,7 +8,7 @@ import ru.yandex.practicum.errorhandler.exceptions.NotFoundException;
 import ru.yandex.practicum.mapper.ProductMapper;
 import ru.yandex.practicum.model.*;
 import ru.yandex.practicum.repository.ProductRepository;
-import ru.yandex.practicum.utils.Pagination;
+import ru.yandex.practicum.utils.PageRequestFactory;
 
 import java.util.List;
 import java.util.UUID;
@@ -24,7 +24,7 @@ public class ShoppingStoreServiceIml implements ShoppingStoreService {
     @Override
     public List<ProductDto> getProducts(ProductCategory category, Pageable pageable) {
 
-        return productRepository.findAllByProductCategory(category, Pagination.getPageRequest(pageable))
+        return productRepository.findAllByProductCategory(category, PageRequestFactory.getPageRequest(pageable))
                 .stream()
                 .map(productMapper::toDto)
                 .toList();

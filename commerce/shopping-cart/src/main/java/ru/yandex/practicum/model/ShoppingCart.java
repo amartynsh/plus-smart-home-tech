@@ -14,12 +14,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class ShoppingCart {
-    @ElementCollection
-    @CollectionTable(name = "products_carts", joinColumns = @JoinColumn(name = "cart_id"))
-    @MapKeyColumn(name = "product_id")
-    @Column(name = "quantity")
-    @Builder.Default
-    Map<UUID, Long> products = new HashMap<>();
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -28,6 +22,10 @@ public class ShoppingCart {
     @Column(name = "status")
     @Builder.Default
     private boolean status = true;
-
-
+    @ElementCollection
+    @CollectionTable(name = "products_carts", joinColumns = @JoinColumn(name = "cart_id"))
+    @MapKeyColumn(name = "product_id")
+    @Column(name = "quantity")
+    @Builder.Default
+    Map<UUID, Long> products = new HashMap<>();
 }

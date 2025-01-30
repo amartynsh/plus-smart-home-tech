@@ -13,7 +13,6 @@ public class NewProductInWarehouseRequest {
     @Min(value = 1, message = "Вес должен быть больше 0")
     private Double weight;
     private DimensionDto dimension;
-    ;
     private Boolean fragile;
 
     @Override
