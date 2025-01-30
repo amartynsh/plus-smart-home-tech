@@ -17,8 +17,6 @@ public class ErrorHandler {
         return createMessage(e, HttpStatus.NOT_FOUND);
     }
 
-
-
     @ExceptionHandler({ValidationException.class, ValidationException.class,
             SpecifiedProductAlreadyInWarehouseException.class,
             ProductInShoppingCartLowQuantityInWarehouse.class, NoSpecifiedProductInWarehouseException.class})
@@ -26,30 +24,6 @@ public class ErrorHandler {
     public ErrorMessage handleBadRequest(Exception e) {
         return createMessage(e, HttpStatus.BAD_REQUEST);
     }
-
-    /*    @ExceptionHandler
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorMessage handleValdationException(ValidationException e) {
-        return createMessage(e, HttpStatus.BAD_REQUEST);
-    }*/
-
-/*    @ExceptionHandler
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorMessage handleSpecifiedProductAlreadyInWarehouseException(SpecifiedProductAlreadyInWarehouseException e) {
-        return createMessage(e, HttpStatus.BAD_REQUEST);
-    }*/
-
-/*    @ExceptionHandler
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorMessage handleProductInShoppingCartLowQuantityInWarehouse(ProductInShoppingCartLowQuantityInWarehouse e) {
-        return createMessage(e, HttpStatus.BAD_REQUEST);
-    }*/
-
-/*    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorMessage handleNoSpecifiedProductInWarehouseException(NoSpecifiedProductInWarehouseException e) {
-        return createMessage(e, HttpStatus.BAD_REQUEST);
-    }
-*/
 
     private ErrorMessage createMessage(Exception e, HttpStatus httpstatus) {
         return ErrorMessage.builder()
