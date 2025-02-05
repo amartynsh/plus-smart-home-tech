@@ -4,13 +4,13 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Getter
 @Setter
-public class DimensionDto {
+public class ShippedToDeliveryRequest {
     @NotNull
-    private Double width;
+    private UUID orderId;
     @NotNull
-    private Double height;
-    @NotNull
-    private Double depth;
+    private UUID deliveryId;
 }
