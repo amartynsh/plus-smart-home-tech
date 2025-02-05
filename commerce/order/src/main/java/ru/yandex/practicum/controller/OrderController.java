@@ -1,5 +1,6 @@
 package ru.yandex.practicum.controller;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
@@ -48,7 +49,7 @@ public class OrderController implements OrderClient {
     }
 
     @Override
-    public OrderDto orderDelivery(UUID orderId) {
+    public OrderDto orderDelivered(UUID orderId) {
         return null;
     }
 
@@ -73,7 +74,7 @@ public class OrderController implements OrderClient {
     }
 
     @Override
-    public OrderDto failedOrderAssembly(UUID orderId) {
+    public OrderDto orderAssemblyFailed(@NotNull UUID orderId) {
         return null;
     }
 }

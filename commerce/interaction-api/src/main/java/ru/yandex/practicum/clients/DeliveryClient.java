@@ -1,8 +1,9 @@
-package ru.yandex.practicum;
+package ru.yandex.practicum.clients;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import ru.yandex.practicum.model.delivery.DeliveryDto;
 
 import java.util.UUID;
@@ -11,23 +12,18 @@ import java.util.UUID;
 public interface DeliveryClient {
 
     @PutMapping
-    DeliveryDto createNewDelivery(DeliveryDto deliveryDto);
+    DeliveryDto createNewDelivery(@RequestBody DeliveryDto deliveryDto);
 
     @PostMapping("/successful")
-    void successfulDelivery(UUID orderId);
+    void successfulDelivery(@RequestBody UUID orderId);
 
     @PostMapping("/picked")
-    void pickedDelivery(UUID orderId);
+    void pickedDelivery(@RequestBody UUID orderId);
 
     @PostMapping("/failed")
-    void failedDelivery(UUID orderId);
+    void failedDelivery(@RequestBody UUID orderId);
 
     @PostMapping("/cost")
-    Double costDelivery(UUID orderId);
-
-
-
-
-
+    Double costDelivery(@RequestBody UUID orderId);
 
 }

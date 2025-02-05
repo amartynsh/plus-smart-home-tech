@@ -1,5 +1,6 @@
 package ru.yandex.practicum.clients;
 
+import jakarta.validation.constraints.NotNull;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.model.CreateNewOrderRequest;
@@ -23,28 +24,31 @@ public interface OrderClient {
     OrderDto returnProduct(@RequestBody ProductReturnRequest request);
 
     @PostMapping("/payment")
-    OrderDto payment(@RequestBody UUID paymentId);
+    OrderDto payment(@RequestBody @NotNull UUID paymentId);
 
     @PostMapping("/payment/failed")
-    OrderDto failedPayment(@RequestBody UUID paymentId);
+    OrderDto failedPayment(@RequestBody @NotNull UUID paymentId);
 
     @PostMapping("/delivery")
-    OrderDto orderDelivery (@RequestBody UUID orderId);
+    OrderDto orderDelivered(@RequestBody @NotNull UUID orderId);
+
+    @PostMapping("/delivery/failed")
+    OrderDto orderDeliveryFailed(@RequestBody @NotNull UUID orderId);
 
     @PostMapping("/completed")
-    OrderDto orderCompleted (@RequestBody UUID orderId);
+    OrderDto orderCompleted (@RequestBody @NotNull UUID orderId);
 
     @PostMapping("/calculate/total")
-    OrderDto calculateTotal(@RequestBody UUID orderId);
+    OrderDto calculateTotal(@RequestBody @NotNull UUID orderId);
 
     @PostMapping("/calculate/delivery")
-    OrderDto calculateDelivery(@RequestBody UUID orderId);
+    OrderDto calculateDelivery(@RequestBody @NotNull UUID orderId);
 
     @PostMapping("/order/assembly")
-    OrderDto orderAssembly(@RequestBody UUID orderId);
+    OrderDto orderAssembly(@RequestBody @NotNull UUID orderId);
 
     @PostMapping("/order/assembly/failed")
-    OrderDto failedOrderAssembly(@RequestBody UUID orderId);
+    OrderDto orderAssemblyFailed(@RequestBody @NotNull UUID orderId);
 
 
 

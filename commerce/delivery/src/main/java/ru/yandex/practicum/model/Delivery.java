@@ -26,4 +26,15 @@ public class Delivery {
     UUID orderId;
     @Enumerated(EnumType.STRING)
     DeliveryState deliveryState;
+
+    @Override
+    public String toString() {
+        return "Delivery{" +
+                "deliveryId=" + deliveryId +
+                ", fromAddress=" + fromAddress +
+                ", toAddress=" + toAddress +
+                ", orderId=" + orderId +
+                ", deliveryState=" + deliveryState +
+                '}';
+    }
 }
