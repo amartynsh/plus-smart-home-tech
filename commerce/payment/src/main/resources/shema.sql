@@ -1,0 +1,8 @@
+create TABLE IF NOT EXISTS payments (
+id UUID PRIMARY KEY,
+total_payment DOUBLE PRECISION NOT NULL,
+delivery_price DOUBLE PRECISION NOT NULL,
+fee_total DOUBLE PRECISION NOT NULL,
+payment_state VARCHAR(255) NOT NULL,
+order_id UUID NOT NULL
+);
