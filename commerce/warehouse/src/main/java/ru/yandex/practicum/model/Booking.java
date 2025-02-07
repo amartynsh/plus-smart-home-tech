@@ -15,6 +15,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "bookings")
 public class Booking {
+    @Id
     @Column(name = "id")
     private UUID id;
     @Column(name = "order_id")
