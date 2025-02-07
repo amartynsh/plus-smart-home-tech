@@ -9,7 +9,7 @@ flat VARCHAR(255) NOT NULL
 
 create TABLE IF NOT EXISTS  orders(
 id UUID PRIMARY KEY,
-user_name varchar(255) NOT NULL,
+username varchar(255) NOT NULL,
 cart_id UUID NOT NULL,
 payment_id UUID NOT NULL,
 delivery_id UUID NOT NULL,
