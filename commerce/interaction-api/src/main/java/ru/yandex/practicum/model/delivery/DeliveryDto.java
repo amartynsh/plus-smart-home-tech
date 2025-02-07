@@ -1,23 +1,25 @@
 package ru.yandex.practicum.model.delivery;
 
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import ru.yandex.practicum.model.warehouse.AddressDto;
 
 import java.util.UUID;
 
+@Builder
 @Getter
 @Setter
 public class DeliveryDto {
     @NotNull
-    UUID deliveryId;
+    private UUID deliveryId;
     @NotNull
-    AddressDto fromAddress;
+    private AddressDto fromAddress;
     @NotNull
-    AddressDto toAddress;
+    private AddressDto toAddress;
     @NotNull
-    UUID orderId;
+    private UUID orderId;
     @NotNull
-    DeliveryState deliveryState;
+    private DeliveryState deliveryState;
 }

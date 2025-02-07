@@ -25,6 +25,6 @@ public class Payment {
     @Enumerated(EnumType.STRING)
     @Column(name = "payment_state")
     private PaymentState paymentState;
-    @Column(name= "order_id")
+    @Column(name = "order_id")
     private UUID orderId;
 }

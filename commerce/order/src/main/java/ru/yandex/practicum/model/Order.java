@@ -1,9 +1,7 @@
 package ru.yandex.practicum.model;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,35 +12,42 @@ import java.util.UUID;
 @Entity
 @Table(name = "orders")
 @Builder
+@RequiredArgsConstructor
+@AllArgsConstructor
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    UUID orderId;
+    private UUID orderId;
     @ElementCollection
     @CollectionTable(name = "products_orders", joinColumns = @JoinColumn(name = "order_id"))
     @MapKeyColumn(name = "product_id")
     @Column(name = "quantity")
     @Builder.Default
-    Map<UUID, Long> products = new HashMap<>();
+    private  Map<UUID, Integer> products = new HashMap<>();
     @Column(name = "cart_id")
-    UUID shoppingCartId;
+    private UUID shoppingCartId;
+    @Column(name = "username")
+    private String username;
     @Column(name = "payment_id")
-    UUID paymentId;
+    private   UUID paymentId;
     @Column(name = "delivery_id")
-    UUID deliveryId;
+    private  UUID deliveryId;
     @Column(name = "order_state")
-    OrderState state;
+    private OrderState state;
     @Column(name = "delivery_weight")
-    Double deliveryWeight;
+    private Double deliveryWeight;
     @Column(name = "delivery_volume")
-    Double deliveryVolume;
+    private Double deliveryVolume;
     @Column(name = "fragile")
-    Boolean fragile;
+    private  Boolean fragile;
     @Column(name = "total_price")
-    Double totalPrice;
+    private Double totalPrice;
     @Column(name = "delivery_price")
-    Double deliveryPrice;
+    private Double deliveryPrice;
     @Column(name = "product_price")
-    Double productPrice;
+    private Double productPrice;
+    @OneToOne
+    Address address;
+
 }

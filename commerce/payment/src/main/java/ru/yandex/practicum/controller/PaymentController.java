@@ -43,4 +43,4 @@ public class PaymentController implements PaymentClient {
     public void failedOrder(UUID orderId) {
         paymentService.paymentFailed(orderId);
     }
- }
+}

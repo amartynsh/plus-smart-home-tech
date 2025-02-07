@@ -1,6 +1,5 @@
 package ru.yandex.practicum.service;
 
-import jakarta.transaction.Transactional;
 import ru.yandex.practicum.model.OrderDto;
 import ru.yandex.practicum.model.payment.PaymentDto;
 

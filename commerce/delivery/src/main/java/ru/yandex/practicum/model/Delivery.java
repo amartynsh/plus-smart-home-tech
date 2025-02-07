@@ -6,6 +6,7 @@ import lombok.Setter;
 import ru.yandex.practicum.model.delivery.DeliveryState;
 
 import java.util.UUID;
+
 @Getter
 @Setter
 @Entity

@@ -21,7 +21,6 @@ import java.util.UUID;
 @Service
 @Slf4j
 @AllArgsConstructor
-@RequiredArgsConstructor
 public class DeliveryServiceImpl implements DeliveryService {
 
     private final DeliveryRepository deliveryRepository;

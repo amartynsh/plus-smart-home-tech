@@ -7,5 +7,6 @@ import ru.yandex.practicum.model.delivery.DeliveryDto;
 @Mapper(componentModel = "spring")
 public interface DeliveryMapper {
     DeliveryDto toDto(Delivery delivery);
+
     Delivery toEntity(DeliveryDto deliveryDto);
 }

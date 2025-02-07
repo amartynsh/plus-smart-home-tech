@@ -10,6 +10,7 @@ import ru.yandex.practicum.clients.OrderClient;
 import ru.yandex.practicum.model.CreateNewOrderRequest;
 import ru.yandex.practicum.model.OrderDto;
 import ru.yandex.practicum.model.ProductReturnRequest;
+import ru.yandex.practicum.service.OrderService;
 import ru.yandex.practicum.service.OrderServiceImpl;
 
 import java.util.List;
@@ -21,7 +22,8 @@ import java.util.UUID;
 @Slf4j
 @RequestMapping("/api/v1/order")
 public class OrderController implements OrderClient {
-    private final OrderServiceImpl orderService;
+    private final OrderService orderService;
+
     @Override
     public List<OrderDto> getOrderBy(String username) {
         log.info("Обращение на GET /api/v1/order, username = {}", username);
@@ -30,47 +32,53 @@ public class OrderController implements OrderClient {
 
     @Override
     public OrderDto createOrder(CreateNewOrderRequest request) {
-        return null;
+        log.info("Обращение на PUT /api/v1/order, request = {}", request);
+        return orderService.addNewOrder(request);
     }
 
     @Override
     public OrderDto returnProduct(ProductReturnRequest request) {
-        return null;
+        return orderService.returnProductToWarehouse(request);
     }
 
     @Override
     public OrderDto payment(UUID paymentId) {
-        return null;
+        return orderService.setPaymentSuccess(paymentId);
     }
 
     @Override
     public OrderDto failedPayment(UUID paymentId) {
-        return null;
+        return  orderService.setPaymentFailed(paymentId);
     }
 
     @Override
     public OrderDto orderDelivered(UUID orderId) {
-        return null;
+        return  orderService.setOrderStateDelivered(orderId);
+    }
+
+    @Override
+    public OrderDto orderDeliveryFailed(UUID orderId) {
+        return orderService.setOrderDeliveryFailed(orderId);
     }
 
     @Override
     public OrderDto orderCompleted(UUID orderId) {
-        return null;
+        return orderService.setOrderCompleted(orderId);
     }
 
     @Override
     public OrderDto calculateTotal(UUID orderId) {
-        return null;
+        return orderService.getOrderTotalPrice(orderId);
     }
 
     @Override
     public OrderDto calculateDelivery(UUID orderId) {
-        return null;
+        return orderService.getOrderDeliveryPrice(orderId);
     }
 
     @Override
     public OrderDto orderAssembly(UUID orderId) {
-        return null;
+        return orderService.orderAssembly(orderId);
     }
 
     @Override
