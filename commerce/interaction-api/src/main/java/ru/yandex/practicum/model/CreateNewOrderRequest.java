@@ -11,9 +11,9 @@ import ru.yandex.practicum.model.warehouse.AddressDto;
 @Setter
 public class CreateNewOrderRequest {
     @NotBlank
-    String username;
+    private String username;
     @NotNull
-    ShoppingCartDto shoppingCart;
+    private ShoppingCartDto shoppingCart;
     @NotNull
-    AddressDto deliveryAddress;
+    private AddressDto deliveryAddress;
 }

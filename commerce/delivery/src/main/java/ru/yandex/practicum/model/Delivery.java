@@ -16,17 +16,17 @@ public class Delivery {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    UUID deliveryId;
+    private UUID deliveryId;
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "from_address_id")
-    Address fromAddress;
+    private Address fromAddress;
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "to_address_id")
-    Address toAddress;
+    private Address toAddress;
     @Column(name = "order_id")
-    UUID orderId;
+    private UUID orderId;
     @Enumerated(EnumType.STRING)
-    DeliveryState deliveryState;
+    private DeliveryState deliveryState;
 
     @Override
     public String toString() {

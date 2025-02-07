@@ -38,6 +38,7 @@ public class OrderController implements OrderClient {
 
     @Override
     public OrderDto returnProduct(ProductReturnRequest request) {
+
         return orderService.returnProductToWarehouse(request);
     }
 
@@ -83,6 +84,6 @@ public class OrderController implements OrderClient {
 
     @Override
     public OrderDto orderAssemblyFailed(@NotNull UUID orderId) {
-        return null;
+        return orderService.assemblyFailed(orderId);
     }
 }

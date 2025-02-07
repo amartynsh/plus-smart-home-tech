@@ -12,16 +12,18 @@ public class DeliveryPriceCalculator {
     private final static double fragilePriceMod = 0.3;
     private final static double wieghtPriceMod = 0.2;
     private final static double notSameAdressPriceMod = 0.2;
+    private final static String ADDRESS_1 = "ADDRESS_1";
+    private final static String ADDRESS_2 = "ADDRESS_2";
 
     public static Double calculatePrice(Delivery delivery, OrderDto orderDto) {
         log.info("Калькулятор стоимости доставки начал расчет цены");
         double price = basePrice;
 
-        if (delivery.getFromAddress().toString().contains("ADDRESS_1")) {
+        if (delivery.getFromAddress().toString().contains(ADDRESS_1)) {
             log.info("применили коэффициент adress1PriceMod = {}", address1PriceMod);
             price = price * address1PriceMod;
         }
-        if (delivery.getFromAddress().toString().contains("ADDRESS_2")) {
+        if (delivery.getFromAddress().toString().contains(ADDRESS_2)) {
             log.info("применили коэффициент address2PriceMod = {}", address2PriceMod);
             price = price * address2PriceMod;
         }

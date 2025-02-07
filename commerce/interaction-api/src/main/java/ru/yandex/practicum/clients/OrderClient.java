@@ -7,7 +7,6 @@ import ru.yandex.practicum.model.CreateNewOrderRequest;
 import ru.yandex.practicum.model.OrderDto;
 import ru.yandex.practicum.model.ProductReturnRequest;
 
-
 import java.util.List;
 import java.util.UUID;
 
@@ -18,7 +17,7 @@ public interface OrderClient {
     List<OrderDto> getOrderBy(@RequestParam("username") String username);
 
     @PutMapping
-    OrderDto createOrder (@RequestBody CreateNewOrderRequest request);
+    OrderDto createOrder(@RequestBody CreateNewOrderRequest request);
 
     @PostMapping("/return")
     OrderDto returnProduct(@RequestBody ProductReturnRequest request);
@@ -36,7 +35,7 @@ public interface OrderClient {
     OrderDto orderDeliveryFailed(@RequestBody @NotNull UUID orderId);
 
     @PostMapping("/completed")
-    OrderDto orderCompleted (@RequestBody @NotNull UUID orderId);
+    OrderDto orderCompleted(@RequestBody @NotNull UUID orderId);
 
     @PostMapping("/calculate/total")
     OrderDto calculateTotal(@RequestBody @NotNull UUID orderId);
@@ -49,13 +48,4 @@ public interface OrderClient {
 
     @PostMapping("/order/assembly/failed")
     OrderDto orderAssemblyFailed(@RequestBody @NotNull UUID orderId);
-
-
-
-
-
-
-
-
-
 }

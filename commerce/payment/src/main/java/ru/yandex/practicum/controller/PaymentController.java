@@ -20,6 +20,7 @@ public class PaymentController implements PaymentClient {
 
     @Override
     public PaymentDto createNewPayment(OrderDto orderDto) {
+        log.info("Обращение на ");
         return paymentService.addNewPayment(orderDto);
     }
 

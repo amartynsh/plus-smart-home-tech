@@ -1,7 +1,6 @@
 package ru.yandex.practicum.service;
 
 import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -157,7 +156,9 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.toDto(orderRepository.save(order));
     }
 
-    OrderDto assemblyFailed(UUID orderId) {
+    @Transactional
+    @Override
+    public OrderDto assemblyFailed(UUID orderId) {
         log.info("Вызван метод assemblyFailed, orderId = {}", orderId);
         Order order = getOrder(orderId);
         order.setState(OrderState.ASSEMBLY_FAILED);

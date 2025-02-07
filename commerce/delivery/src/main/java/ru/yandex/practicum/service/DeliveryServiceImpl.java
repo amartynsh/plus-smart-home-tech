@@ -43,7 +43,6 @@ public class DeliveryServiceImpl implements DeliveryService {
         log.info("Вызван метод successfulDelivery, orderId = {}", orderId);
         Delivery delivery = findByOrderId(orderId);
         delivery.setDeliveryState(DeliveryState.DELIVERED);
-        deliveryRepository.save(delivery);
         orderClient.orderDelivered(orderId);
         log.info("Успешная доставка для заказа {} сохранена", orderId);
     }
@@ -54,7 +53,6 @@ public class DeliveryServiceImpl implements DeliveryService {
         log.info("Вызван метод failedDelivery, orderId = {}", orderId);
         Delivery delivery = findByOrderId(orderId);
         delivery.setDeliveryState(DeliveryState.FAILED);
-        deliveryRepository.save(delivery);
         orderClient.orderDeliveryFailed(orderId);
         log.info("Неуспешная доставка для заказа {} сохранена", orderId);
     }

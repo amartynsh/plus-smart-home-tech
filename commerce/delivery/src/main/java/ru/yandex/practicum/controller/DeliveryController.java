@@ -38,6 +38,7 @@ public class DeliveryController implements DeliveryClient {
 
     @Override
     public void failedDelivery(UUID orderId) {
+        log.info("Обращение на POST /api/v1/delivery/failed");
         deliveryService.failedDelivery(orderId);
     }
 
