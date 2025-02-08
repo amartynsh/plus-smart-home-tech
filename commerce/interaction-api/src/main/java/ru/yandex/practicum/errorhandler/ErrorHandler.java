@@ -11,15 +11,16 @@ import ru.yandex.practicum.errorhandler.exceptions.*;
 @RestControllerAdvice
 public class ErrorHandler {
 
-    @ExceptionHandler
+    @ExceptionHandler({NoPaymentFoundException.class, NotFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorMessage handleNotFoundException(NotFoundException e) {
+    public ErrorMessage handleNotFoundException(Exception e) {
         return createMessage(e, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler({ValidationException.class, ValidationException.class,
             SpecifiedProductAlreadyInWarehouseException.class,
-            ProductInShoppingCartLowQuantityInWarehouse.class, NoSpecifiedProductInWarehouseException.class})
+            ProductInShoppingCartLowQuantityInWarehouse.class, NoSpecifiedProductInWarehouseException.class,
+            NotEnoughInfoInOrderToCalculateException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorMessage handleBadRequest(Exception e) {
         return createMessage(e, HttpStatus.BAD_REQUEST);
